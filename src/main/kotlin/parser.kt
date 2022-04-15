@@ -22,15 +22,15 @@ class Parser{
 
     fun parsing(args: Array<String>) {
         val parser = CmdLineParser(this)
-        val arg: Collection<String>
-        arg = args.toList()
-
         try {
-            parser.parseArgument(arg)
+            parser.parseArgument(args.toList())
+            if (sizeOfFile.toString() == "") {
+                unpacking(inputName) / 1000
+            }
             getSize(inputName)
             }
-        catch(Ex: IllegalArgumentException){
-            throw IllegalArgumentException()
+        catch(e: Exception) {
+            throw IllegalArgumentException("File does not exist")
         }
     }
 }

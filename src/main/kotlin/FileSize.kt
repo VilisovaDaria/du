@@ -1,13 +1,17 @@
 import java.io.*
 
 fun unpacking(inputName: File): Int {
+    if (!inputName.exists()) throw IllegalArgumentException("The file does not exist")
+
     var summarySize = 0
 
     return if (inputName.isDirectory) {
-        val catalogOfFiles = inputName.listFiles()
-        for (i in catalogOfFiles.indices) {
-            val sizeOfOneFile = FileInputStream(catalogOfFiles[i]).readAllBytes().size
-            summarySize += sizeOfOneFile
+        val listOfSummaryFileSize = mutableListOf<File>()
+        val sizeOfOneFile = inputName.walkTopDown().filter { it.isFile }.forEach { listOfSummaryFileSize.add(it) }
+
+        for (i in 0..listOfSummaryFileSize.lastIndex){
+            val d = FileInputStream(listOfSummaryFileSize[i]).readAllBytes().size
+            summarySize += d
         }
         summarySize
     } else {
@@ -16,14 +20,13 @@ fun unpacking(inputName: File): Int {
 }
 
 fun getSize(inputName: File): String {
-    val digitOfSize = digitNumber(unpacking(inputName))
+    val summarySizeInBytes = unpacking(inputName)
 
-    return when {
-        digitOfSize < 4 -> "${unpacking(inputName)} B"
-        digitOfSize in 4..6 -> "${unpacking(inputName) / 1000} KB"
-        digitOfSize in 7..9 -> "${unpacking(inputName) / (1000 * 1000)} KB"
-        digitOfSize in 10..12 -> "${unpacking(inputName) / (1000 * 1000 * 1000)} GB"
-        else -> String()
+    return when (digitNumber(unpacking(inputName))) {
+        in 1..3 -> "$summarySizeInBytes B"
+        in 4..6 -> "${summarySizeInBytes / 1000} KB"
+        in 7..9 -> "${summarySizeInBytes / (1000 * 1000)} MB"
+        else -> "${summarySizeInBytes / (1000 * 1000 * 1000)} GB"
     }
 }
 
