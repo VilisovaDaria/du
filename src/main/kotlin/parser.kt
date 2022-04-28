@@ -1,7 +1,8 @@
 import org.kohsuke.args4j.Argument
-import org.kohsuke.args4j.Option
 import org.kohsuke.args4j.CmdLineParser
+import org.kohsuke.args4j.Option
 import java.io.File
+import kotlin.math.*
 
 fun main(args: Array<String>) {
     Parser().parsing(args)
@@ -9,13 +10,13 @@ fun main(args: Array<String>) {
 
 class Parser{
     @Option (name = "-h", usage = "Human readable format")
-    private var sizeOfFile = String
+    private var sizeOfFile: Boolean = false
 
     @Option (name = "-c", usage = "Summary file size")
-    private var totalSize = String
+    private var totalSize: Boolean = false
 
     @Option (name = "--si", usage = "The base - 1 000")
-    private var foundation = String
+    private var foundation: Boolean = false
 
     @Argument(metaVar = "InputName", usage = "Input file name", required = true)
     private lateinit var inputName: File
@@ -24,13 +25,11 @@ class Parser{
         val parser = CmdLineParser(this)
         try {
             parser.parseArgument(args.toList())
-            if (sizeOfFile.toString() == "") {
-                unpacking(inputName) / 1000
-            }
-            getSize(inputName)
-            }
+           }
         catch(e: Exception) {
             throw IllegalArgumentException("File does not exist")
         }
+        mainFunction(sizeOfFile, totalSize, foundation, inputName)
     }
 }
+
