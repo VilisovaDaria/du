@@ -18,21 +18,24 @@ fun du(humanReadable: Boolean, totalSize: Boolean, foundation: Boolean, vararg i
 
     for (i in inputName.indices) {
 
-        val arrayBytesSize = unpacking(inputName[i]).values.toLongArray()
-        for (k in arrayBytesSize.indices){
+        val bytesSize = unpacking(inputName[i]).values.toLongArray()
+        val fileNames = unpacking(inputName[i]).keys.toList()
+        for (k in bytesSize.indices){
             if (totalSize) {
-                summarySize += arrayBytesSize[k]
+                summarySize += bytesSize[k]
             } else {
-                summarySize = arrayBytesSize[k]
+                summarySize = bytesSize[k]
 
             }
+
             val full = summarySize / baseFoundation
             val divisor = (summarySize - full * baseFoundation) % baseFoundation
-            result.addAll(listOf("$full.$divisor"))
+
+            result.addAll(listOf("${fileNames[k]} - $full.$divisor"))
         }
     }
 
-    return if (totalSize) listOf(result[result.lastIndex])
+    return if (totalSize) listOf("Summary size - ${result[result.lastIndex].split(" ")[2]}")
     else result
 }
 
