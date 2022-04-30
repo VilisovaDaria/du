@@ -9,9 +9,10 @@ class Tests {
 
     @Test
     fun unpacking() {
-        assertEquals(mapOf("File" to 1717.toLong()), unpacking(File("File")))
+        assertEquals(mapOf("File" to 30678.toLong()), unpacking(File("File")))
+        assertEquals(mapOf("File\\NewDirectory\\bigFile" to 28961.toLong()), unpacking(File("File/NewDirectory/bigFile")))
         assertEquals(mapOf("File\\txt2" to 1024.toLong()), unpacking(File("File/txt2")))
-        assertEquals(mapOf("File\\NewDirectory" to 34.toLong()), unpacking(File("File/NewDirectory")))
+        assertEquals(mapOf("File\\NewDirectory\\txt3" to 34.toLong()), unpacking(File("File/NewDirectory/txt3")))
         assertEquals(mapOf("File\\1" to 0.toLong()), unpacking(File("File/1")))
         assertThrows(IllegalArgumentException::class.java) { unpacking(File("Fijvd")) }
         assertThrows(IllegalArgumentException::class.java) { unpacking(File("")) }
@@ -19,7 +20,8 @@ class Tests {
 
     @Test
     fun getSize() {
-        assertEquals(listOf("File\\NewDirectory - 34 B"), getSize(false, true, File("File/NewDirectory")))
+        assertEquals(listOf("File\\NewDirectory\\txt3 - 34 B"), getSize(false, true, File("File/NewDirectory/txt3")))
+        assertEquals(listOf("File\\NewDirectory\\bigFile - 28.289 KB"), getSize(false, false, File("File/NewDirectory/bigFile")))
         assertEquals(listOf("Summary size - 2.0 KB"), getSize(true, true, File("File/txt2"), File("File/txt2")))
         assertEquals(listOf("Summary size - 659 B"), getSize(true, true, File("File/txt1")))
         assertEquals(listOf("Summary size - 2.0 KB"), getSize(true, false, File("File/txt2"), File("File/txt2")))
@@ -34,7 +36,7 @@ class Tests {
     @Test
     fun du() {
         assertEquals("2.0", du(false, true, false, File("File/txt2"), File("File/txt2")))
-        assertEquals("1.717", du(false, true, true, File("File")))
+        assertEquals("30.678", du(false, true, true, File("File")))
         assertThrows(IllegalArgumentException::class.java) { du(false, false, true, File("hjgt")) }
     }
 
