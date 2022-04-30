@@ -2,6 +2,8 @@ import java.io.File
 import kotlin.io.path.fileSize
 
 fun unpacking(inputName: File): MutableMap<String, Long> {
+    if (!inputName.exists()) throw IllegalArgumentException("File does not exist")
+
     val result = mutableMapOf<String, Long>()
 
     //находим размер каталога
