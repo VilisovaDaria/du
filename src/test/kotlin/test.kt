@@ -19,6 +19,16 @@ class Tests {
     }
 
     @Test
+    fun humanReadable() {
+        assertEquals("29.982 KB", humanReadable(false, 30678))
+        assertEquals("30.678 KB", humanReadable(true, 30678))
+        assertEquals("34 B", humanReadable(false, 34))
+        assertEquals("0 B", humanReadable(false, 0))
+        assertThrows(IllegalArgumentException::class.java) {humanReadable(true, -56)}
+    }
+
+
+    @Test
     fun getSize() {
         assertEquals(listOf("File\\NewDirectory\\txt3 - 34 B"), getSize(false, true, File("File/NewDirectory/txt3")))
         assertEquals(listOf("File\\NewDirectory\\bigFile - 28.289 KB"), getSize(false, false, File("File/NewDirectory/bigFile")))

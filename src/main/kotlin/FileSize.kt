@@ -74,6 +74,8 @@ fun getSize(totalSize: Boolean, foundation: Boolean, vararg inputName: File): Li
 
 
 fun humanReadable(foundation: Boolean, k: Long): String {
+    if (k < 0) throw IllegalArgumentException("Incorrect format")
+
     var defaultFoundation = 1024
     var i = 0
     val type = arrayOf("B", "KB", "MB", "GB")
