@@ -22,11 +22,11 @@ class Tests {
     fun getSize() {
         assertEquals(listOf("File\\NewDirectory\\txt3 - 34 B"), getSize(false, true, File("File/NewDirectory/txt3")))
         assertEquals(listOf("File\\NewDirectory\\bigFile - 28.289 KB"), getSize(false, false, File("File/NewDirectory/bigFile")))
-        assertEquals(listOf("Summary size - 2.0 KB"), getSize(true, true, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("Summary size - 2.48 KB"), getSize(true, true, File("File/txt2"), File("File/txt2")))
         assertEquals(listOf("Summary size - 659 B"), getSize(true, true, File("File/txt1")))
         assertEquals(listOf("Summary size - 2.0 KB"), getSize(true, false, File("File/txt2"), File("File/txt2")))
         assertEquals(
-            listOf("File\\txt2 - 1.0 KB", "File\\txt1 - 659 B"),
+            listOf("File\\txt2 - 1.24 KB", "File\\txt1 - 659 B"),
             getSize(false, true, File("File/txt2"), File("File/txt1"))
         )
         assertThrows(IllegalArgumentException::class.java) { getSize(false, true, File("File/txt5")) }
@@ -35,8 +35,8 @@ class Tests {
 
     @Test
     fun du() {
-        assertEquals("2.0", du(false, true, false, File("File/txt2"), File("File/txt2")))
-        assertEquals("30.678", du(false, true, true, File("File")))
+        assertEquals(listOf("2.0"), du(false, true, false, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("30.678"), du(false, true, true, File("File")))
         assertThrows(IllegalArgumentException::class.java) { du(false, false, true, File("hjgt")) }
     }
 
