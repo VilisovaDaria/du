@@ -45,8 +45,9 @@ class Tests {
 
     @Test
     fun du() {
-        assertEquals(listOf("2.0"), du(false, true, false, File("File/txt2"), File("File/txt2")))
-        assertEquals(listOf("30.678"), du(false, true, true, File("File")))
+        assertEquals(listOf("Summary size - 2.0"), du(false, true, false, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("File\\txt2 - 1.0", "File\\txt2 - 1.0"), du(false, false, false, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("Summary size - 30.678"), du(false, true, true, File("File")))
         assertThrows(IllegalArgumentException::class.java) { du(false, false, true, File("hjgt")) }
     }
 
