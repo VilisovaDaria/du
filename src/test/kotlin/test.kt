@@ -32,7 +32,7 @@ class Tests {
         assertEquals(listOf("File\\NewDirectory\\bigFile - 28,282 KB"), du(true, false, false, File("File/NewDirectory/bigFile")))
         assertEquals(listOf("Summary size - 2,048 KB"), du(true, true, true, File("File/txt2"), File("File/txt2")))
         assertEquals(listOf("Summary size - 659 B"), du(true, true, true, File("File/txt1")))
-        assertEquals(listOf("File\\txt2 - 1,000", "File\\txt2 - 1,000"), d(false, false, false, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("File\\txt2 - 1,000", "File\\txt2 - 1,000"), du(false, false, false, File("File/txt2"), File("File/txt2")))
         assertEquals(listOf("Summary size - 30,678"), du(false, true, true, File("File")))
         assertThrows(IllegalArgumentException::class.java) { du(false, false, true, File("hjgt")) }
         assertEquals(listOf("Summary size - 2,000 KB"), du(true, true, false, File("File/txt2"), File("File/txt2")))
