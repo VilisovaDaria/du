@@ -10,10 +10,6 @@ fun du(humanReadable: Boolean, totalSize: Boolean, foundation: Boolean, vararg i
     var summarySize = 0L
     val result = mutableListOf<String>()
 
-    for (i in inputName.indices) {
-        if (!inputName[i].exists()) throw IllegalArgumentException("The file does not exist")
-    }
-
     if (humanReadable) {
 
         if (!totalSize) {
