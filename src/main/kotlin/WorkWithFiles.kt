@@ -10,7 +10,7 @@ fun unpacking(inputName: File): MutableMap<String, Long> {
     if (inputName.isDirectory) {
         val listOfSummaryFileSize = mutableListOf<File>()
         val sizeOfOneFile = inputName.walkTopDown().filter { it.isFile }.forEach { listOfSummaryFileSize.add(it) }
-        var summary = 0.toLong()
+        var summary = 0L
 
         for (i in 0..listOfSummaryFileSize.lastIndex){
             val d = listOfSummaryFileSize[i].toPath().fileSize()
