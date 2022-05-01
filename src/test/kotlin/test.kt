@@ -2,7 +2,6 @@ import org.junit.Test
 import java.io.File
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Assertions.*
-import java.nio.file.NoSuchFileException
 
 
 class Tests {
@@ -20,35 +19,29 @@ class Tests {
 
     @Test
     fun humanReadable() {
-        assertEquals("29.982 KB", humanReadable(false, 30678))
-        assertEquals("30.678 KB", humanReadable(true, 30678))
+        assertEquals("29,959 KB", humanReadable(false, 30678))
+        assertEquals("30,678 KB", humanReadable(true, 30678))
         assertEquals("34 B", humanReadable(false, 34))
         assertEquals("0 B", humanReadable(false, 0))
         assertThrows(IllegalArgumentException::class.java) {humanReadable(true, -56)}
     }
 
-
-    @Test
-    fun getSize() {
-        assertEquals(listOf("File\\NewDirectory\\txt3 - 34 B"), getSize(false, true, File("File/NewDirectory/txt3")))
-        assertEquals(listOf("File\\NewDirectory\\bigFile - 28.289 KB"), getSize(false, false, File("File/NewDirectory/bigFile")))
-        assertEquals(listOf("Summary size - 2.48 KB"), getSize(true, true, File("File/txt2"), File("File/txt2")))
-        assertEquals(listOf("Summary size - 659 B"), getSize(true, true, File("File/txt1")))
-        assertEquals(listOf("Summary size - 2.0 KB"), getSize(true, false, File("File/txt2"), File("File/txt2")))
-        assertEquals(
-            listOf("File\\txt2 - 1.24 KB", "File\\txt1 - 659 B"),
-            getSize(false, true, File("File/txt2"), File("File/txt1"))
-        )
-        assertThrows(IllegalArgumentException::class.java) { getSize(false, true, File("File/txt5")) }
-        assertThrows(IllegalArgumentException::class.java) { getSize(false, true, File("")) }
-    }
-
     @Test
     fun du() {
-        assertEquals(listOf("Summary size - 2.0"), du(false, true, false, File("File/txt2"), File("File/txt2")))
-        assertEquals(listOf("File\\txt2 - 1.0", "File\\txt2 - 1.0"), du(false, false, false, File("File/txt2"), File("File/txt2")))
-        assertEquals(listOf("Summary size - 30.678"), du(false, true, true, File("File")))
+        assertEquals(listOf("File\\NewDirectory\\txt3 - 34 B"), du(true, false, true, File("File/NewDirectory/txt3")))
+        assertEquals(listOf("File\\NewDirectory\\bigFile - 28,282 KB"), du(true, false, false, File("File/NewDirectory/bigFile")))
+        assertEquals(listOf("Summary size - 2,048 KB"), du(true, true, true, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("Summary size - 659 B"), du(true, true, true, File("File/txt1")))
+        assertEquals(listOf("File\\txt2 - 1,000", "File\\txt2 - 1,000"), d(false, false, false, File("File/txt2"), File("File/txt2")))
+        assertEquals(listOf("Summary size - 30,678"), du(false, true, true, File("File")))
         assertThrows(IllegalArgumentException::class.java) { du(false, false, true, File("hjgt")) }
+        assertEquals(listOf("Summary size - 2,000 KB"), du(true, true, false, File("File/txt2"), File("File/txt2")))
+        assertEquals(
+            listOf("File\\txt2 - 1,024 KB", "File\\txt1 - 659 B"),
+            du(true, false, true, File("File/txt2"), File("File/txt1"))
+        )
+        assertThrows(IllegalArgumentException::class.java) { du(true, false, true, File("File/txt5")) }
+        assertThrows(IllegalArgumentException::class.java) { du(false, false, true, File("")) }
     }
 
 }
