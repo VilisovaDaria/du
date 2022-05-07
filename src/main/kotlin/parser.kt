@@ -9,6 +9,7 @@ fun main(args: Array<String>) {
     parser.parsing(args)
 }
 
+
 class Parser{
     @Option (name = "-h", usage = "Human readable format")
     private var humanReadable: Boolean = false
@@ -25,7 +26,8 @@ class Parser{
     fun parsing(args: Array<String>) {
         val parser = CmdLineParser(this)
         parser.parseArgument(args.toList())
-        println(du(humanReadable, totalSize, foundation1000, *inputName))
+        println(du(humanReadable, totalSize, foundation1000, *inputName)
+            .toString().replace(Regex("^\\{|\\}\$"), ""))
     }
 }
 

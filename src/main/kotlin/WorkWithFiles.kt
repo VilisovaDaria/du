@@ -1,25 +1,25 @@
 import java.io.File
 import kotlin.io.path.fileSize
 
-fun unpacking(inputName: File): MutableMap<String, Long> {
-    if (!inputName.exists()) throw IllegalArgumentException("File does not exist")
+fun getBytesSize(inputFile: File): MutableMap<String, Long> {
+    if (!inputFile.exists()) throw IllegalArgumentException("File does not exist")
 
     val result = mutableMapOf<String, Long>()
 
     //находим размер каталога
-    if (inputName.isDirectory) {
+    if (inputFile.isDirectory) {
         val listOfSummaryFileSize = mutableListOf<File>()
-        val sizeOfOneFile = inputName.walkTopDown().filter { it.isFile }.forEach { listOfSummaryFileSize.add(it) }
+        val sizeOfOneFile = inputFile.walkTopDown().filter { it.isFile }.forEach { listOfSummaryFileSize.add(it) }
         var summary = 0L
 
         for (i in 0..listOfSummaryFileSize.lastIndex){
             val d = listOfSummaryFileSize[i].toPath().fileSize()
             summary += d
         }
-        result[inputName.toString()] = summary
+        result[inputFile.toString()] = summary
     }
     else {
-        result[inputName.toString()] = inputName.toPath().fileSize()
+        result[inputFile.toString()] = inputFile.toPath().fileSize()
     }
     return result
 }

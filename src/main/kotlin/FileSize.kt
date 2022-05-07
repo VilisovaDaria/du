@@ -1,23 +1,21 @@
 import java.io.*
 
-
 fun du(humanReadable: Boolean, totalSize: Boolean, foundation: Boolean, vararg inputFile: File): Map<String, String> {
     val result = mutableMapOf<String, String>()
     var summarySize = 0L
     val baseFoundation = if (foundation) 1000 else 1024
 
-
     if (totalSize) {
-        inputFile.forEach { getBytes(it).forEach { summarySize += it.value } }
-        if (humanReadable) result["Summary size"] = humanReadable(foundation, summarySize)
+        inputFile.forEach { getBytesSize(it).forEach { summarySize += it.value } }
+        if (humanReadable) result["Summary size"] = getHumanReadableFormat(foundation, summarySize)
         else {
             val n = summarySize.toDouble() / baseFoundation.toDouble()
             result["Summary size"] = "%.3f".format(n)
         }
     } else {
         for (i in inputFile.indices) {
-            val oneFileByteSize = getBytes(inputFile[i]).values.first()
-            if (humanReadable) result["${inputFile[i]}"] = humanReadable(foundation, oneFileByteSize)
+            val oneFileByteSize = getBytesSize(inputFile[i]).values.first()
+            if (humanReadable) result["${inputFile[i]}"] = getHumanReadableFormat(foundation, oneFileByteSize)
             else {
                 val n = oneFileByteSize.toDouble() / baseFoundation.toDouble()
                 result["${inputFile[i]}"] = "%.3f".format(n)
@@ -27,7 +25,7 @@ fun du(humanReadable: Boolean, totalSize: Boolean, foundation: Boolean, vararg i
     return result
 }
 
-fun humanReadable(foundation: Boolean, k: Long): String {
+fun getHumanReadableFormat(foundation: Boolean, k: Long): String {
     if (k < 0) throw IllegalArgumentException("Incorrect format")
     var i = 0
     val type = arrayOf("B", "KB", "MB", "GB")
